@@ -1,2 +1,4 @@
 env/
 .idea
+main.py
+__pycache__/
