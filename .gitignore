@@ -1,4 +1,5 @@
 env/
+test/
 .idea
 main.py
 __pycache__/

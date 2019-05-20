@@ -1,17 +1,26 @@
 import pandas as pd
 import numpy as np
+from .model_trainer import ModelTrainer
 
-def LfrrTrainer(ModelTrainer):
 
-    def __init__(self, users_df, user_map, k, alpha, iterations, lmda):
+class LfrrTrainer(ModelTrainer):
+
+    def __init__(self, k, alpha, iterations, lmda):
+        super().__init__()
+
+        self.R = pd.DataFrame(columns=['cat_a', 'cat_b', 'score'])
+        self.k = k
         self.alpha = alpha
-        self.R = users_df
-        self.U = np.zeros((len(user_map), k,))
-        self.V = np.zeros((len(user_map), k,))
         self.iterations = iterations
         self.lmda = lmda
+        self.U = []
+        self.V = []
 
-    def uniform_initialize_uv(self):
+    def setup_data(self, users_df, len_user_a, len_user_b):
+        self.R = users_df
+        self.U = np.zeros((len_user_a, self.k,))
+        self.V = np.zeros((len_user_b, self.k,))
+
         self.U = np.random.normal(0, 1.0, np.shape(self.U))
         self.V = np.random.normal(0, 1.0, np.shape(self.V))
 
@@ -27,8 +36,8 @@ def LfrrTrainer(ModelTrainer):
     def mse(self):
         mse = 0.0
         for index, row in self.R.iterrows():
-            x = int(row['user_id'])
-            y = int(row['partner_id'])
+            x = int(row['cat_a'])
+            y = int(row['cat_b'])
             v = row['score']
             predicted_v = np.dot(self.U[x], self.V[y].T)
             error = v - predicted_v
@@ -38,8 +47,8 @@ def LfrrTrainer(ModelTrainer):
     def gradient_descent(self):
         df = self.R.sample(frac=1)
         for index, row in df.iterrows():
-            i = int(row['user_id'])
-            j = int(row['partner_id'])
+            i = int(row['cat_a'])
+            j = int(row['cat_b'])
             v = row['score']
             prediction = np.dot(self.U[i, :], self.V[j, :].T)
             e = v - prediction

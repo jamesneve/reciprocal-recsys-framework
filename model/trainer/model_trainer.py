@@ -1,6 +1,11 @@
-import pandas as pd
+import abc
 
 class ModelTrainer(object):
 
-    def train(self, users_df):
-        print(str(users_df))
+    @abc.abstractmethod
+    def setup_data(self, users_df, len_user_a, len_user_b):
+        pass
+
+    @abc.abstractmethod
+    def train(self):
+        pass
