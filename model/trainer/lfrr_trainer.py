@@ -24,6 +24,11 @@ class LfrrTrainer(ModelTrainer):
         self.U = np.random.normal(0, 1.0, np.shape(self.U))
         self.V = np.random.normal(0, 1.0, np.shape(self.V))
 
+    def reset_data(self):
+        self.R = pd.DataFrame(columns=['cat_a', 'cat_b', 'score'])
+        self.U = []
+        self.V = []
+
     def train(self):
         mse_list = [self.mse()]
         for i in range(0, self.iterations):

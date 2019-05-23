@@ -7,5 +7,9 @@ class ModelTrainer(object):
         pass
 
     @abc.abstractmethod
+    def reset_data(self):
+        pass
+
+    @abc.abstractmethod
     def train(self):
         pass
