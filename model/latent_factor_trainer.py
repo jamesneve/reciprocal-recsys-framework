@@ -6,8 +6,8 @@ import numpy as np
 
 class LatentFactorTrainer(ModelBasedTrainer):
 
-    USER_FILENAME = "user_"
-    PARTNER_FILENAME = "partner_"
+    A_B_FILENAME = "a_b_"
+    B_A_FILENAME = "b_a_"
 
     def __init__(self, data_reader: DataReader, model_trainer: ModelTrainer, model_dir: str):
         two_class = False
@@ -18,26 +18,26 @@ class LatentFactorTrainer(ModelBasedTrainer):
         self.model_dir = model_dir
 
     def train_models(self):
-        self.train_user_model()
+        self.train_a_b_model()
 
         if self.two_class:
-            self.train_partner_model()
+            self.train_b_a_model()
 
-    def train_user_model(self):
+    def train_a_b_model(self):
         users_df, user_a_map, user_b_map = self.data_reader.read_user_data()
 
         self.model_trainer.reset_data()
         self.model_trainer.setup_data(users_df, len(user_a_map), len(user_b_map))
 
-        self.save_model(self.USER_FILENAME)
+        self.save_model(self.A_B_FILENAME)
 
-    def train_partner_model(self):
+    def train_b_a_model(self):
         partners_df, partner_a_map, partner_b_map = self.data_reader.read_partner_data()
 
         self.model_trainer.reset_data()
         self.model_trainer.setup_data(partners_df, len(partner_a_map), len(partner_b_map))
 
-        self.save_model(self.PARTNER_FILENAME)
+        self.save_model(self.B_A_FILENAME)
 
     def save_model(self, filename):
         u, v, mse_list = self.model_trainer.train()
