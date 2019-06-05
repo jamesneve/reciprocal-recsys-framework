@@ -1,4 +1,4 @@
-from .data.data_reader import DataReader
+from ..data.data_reader import DataReader
 from .trainer.model_trainer import ModelTrainer
 from .model_based_trainer import ModelBasedTrainer
 import numpy as np

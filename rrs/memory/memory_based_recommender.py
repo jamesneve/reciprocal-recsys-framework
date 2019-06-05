@@ -1,5 +1,5 @@
 import numpy as np
-from .data.data_reader import DataReader
+from ..data.data_reader import DataReader
 from .filter import Filter
 
 from typing import List
