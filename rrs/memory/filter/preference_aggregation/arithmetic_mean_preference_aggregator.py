@@ -1,7 +1,8 @@
 import numpy as np
 from .preference_aggregator import PreferenceAggregator
 
-class ArithmeticMeanAggregator(PreferenceAggregator):
+
+class ArithmeticMeanPreferenceAggregator(PreferenceAggregator):
 
     def aggregate_scores(self):
         res = self.arithmetic_mean(self.ab_score, self.ba_score)

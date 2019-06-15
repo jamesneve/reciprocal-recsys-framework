@@ -32,10 +32,10 @@ class LatentFactorTrainer(ModelBasedTrainer):
         self.save_model(self.A_B_FILENAME)
 
     def train_b_a_model(self):
-        partners_df, partner_a_map, partner_b_map = self.data_reader.read_partner_data()
+        partners_df, partner_b_map, partner_a_map = self.data_reader.read_partner_data()
 
         self.model_trainer.reset_data()
-        self.model_trainer.setup_data(partners_df, len(partner_a_map), len(partner_b_map))
+        self.model_trainer.setup_data(partners_df, len(partner_b_map), len(partner_a_map))
 
         self.save_model(self.B_A_FILENAME)
 
