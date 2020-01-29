@@ -5,10 +5,9 @@ import abc
 
 class ModelBasedTrainer(object):
 
-    def __init__(self, data_reader: DataReader, model_trainer: ModelTrainer, two_class: bool = False):
+    def __init__(self, data_reader: DataReader, model_trainer: ModelTrainer):
         self.data_reader = data_reader
         self.model_trainer = model_trainer
-        self.two_class = two_class
 
     @abc.abstractmethod
     def train_models(self):
